@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>英文繪本線上閱讀教室 (5-Day Plan)</title>
+  <title>英文繪本線上閱讀教室 (5-Day Equal Split)</title>
   <style>
     :root {
       --primary-color: #2e7d32;
@@ -24,6 +24,7 @@
     .page-card.active { display: block; }
     .page-number { font-size: 0.9rem; color: #666; font-weight: bold; }
     .story-text { font-size: 1.25rem; line-height: 1.8; margin: 20px 0; white-space: pre-line; }
+    .vocab-tag { display: inline-block; background: #fff3e0; border: 1px solid #ffe0b2; padding: 2px 8px; border-radius: 4px; font-size: 0.9rem; margin-top: 5px; }
   </style>
 </head>
 <body>
@@ -35,63 +36,59 @@
 
   <div class="container">
     
-    <!-- 選擇繪本切換區 -->
     <div class="book-picker">
       📚 選擇繪本：
       <select id="bookSelect" onchange="switchBook(this.value)">
-        <option value="book1">Book 1: A Visit to a Farm</option>
-        <option value="book2">Book 2: A Visit to a Publisher</option>
+        <option value="book1">Book 1: A Visit to a Farm (完整全書 315字均分5天)</option>
+        <option value="book2">Book 2: A Visit to a Publisher (222字均分5天)</option>
       </select>
     </div>
 
-    <!-- 控制切換頁數 -->
     <div class="controls">
       <button id="prevBtn" onclick="changePage(-1)">⬅️ 上一天</button>
       <select id="pageSelect" onchange="jumpToPage(this.value)"></select>
       <button id="nextBtn" onclick="changePage(1)">下一天 ➡️</button>
     </div>
 
-    <!-- 繪本內容放置區 (由 JavaScript 動態生成) -->
     <div id="contentArea"></div>
 
   </div>
 
   <script>
-    // 📖 所有繪本資料庫（皆已按字數均分為 5 天進度）
     const books = {
       book1: {
         title: "A Visit to a Farm",
         author: "D. M. Rice",
         pages: [
           { 
-            page: "Day 1 (p.3)", 
-            section: "Day 1: Going to the Farm", 
-            note: "今日目標：建立情境與人物認識",
-            text: "Last summer, my brother and I visited my grandparents' farm. Our dad drove us there. He gave me a camera so I could make a book about our visit." 
+            page: "Day 1 (63 words)", 
+            section: "p.3 - p.6: Going to the Farm & Barn", 
+            note: "進度：p.3 - p.6 (1/5)",
+            text: "Last summer, my brother and I visited my grandparents' farm. Our dad drove us there. He gave me a camera so I could make a book about our visit.\n\nGrandma and Grandpa were there to meet us, along with their dog, Buddy. They were all happy to see us.\n\nAfter our dad left, Grandma asked us, \"What would you like to see?\" We said, \"Everything!\" So Grandma, Grandpa, and Buddy showed us the farm.\n\nFirst, we saw the big, red barn. The barn is big so that the animals and farm machines can fit inside." 
           },
           { 
-            page: "Day 2 (p.4)", 
-            section: "Day 2: Meeting Everyone", 
-            note: "今日目標：觀察農場環境與角色互動",
-            text: "Grandma and Grandpa were there to meet us, along with their dog, Buddy. They were all happy to see us." 
+            page: "Day 2 (63 words)", 
+            section: "p.7 - p.10: Silos & Feeding Horses", 
+            note: "進度：p.7 - p.10 (2/5)",
+            text: "Grandpa said that he milks the cows in the barn and keeps his tractor there, too.\n\nNext to the barn are tall silos. The silos store the grain from the farm. The grain feeds the animals in the winter.\n\nNext, we saw the horse corral. Horses and ponies were there. They were standing nose to nose. They looked like they were talking to each other.\n\nOne horse was near the fence." 
           },
           { 
-            page: "Day 3 (p.5)", 
-            section: "Day 3: Exploring the Farm", 
-            note: "今日目標：探索農場與問答互動",
-            text: "After our dad left, Grandma asked us, 'What would you like to see?' We said, 'Everything!' So Grandma, Grandpa, and Buddy showed us the farm." 
+            page: "Day 3 (63 words)", 
+            section: "p.11 - p.14: Cows, Calf & Loud Noise", 
+            note: "進度：p.11 - p.14 (3/5)",
+            text: "Grandpa gave my brother a carrot to feed the horse. He ate that carrot right out of my brother's hand!\n\nBeyond the corral, we saw the cows in the pasture. Some were eating and some were just standing.\n\nA calf drinks milk.\nOne small calf was getting milk from its mother.\n\nThe Fields\nHarvesting the grain\nWhen we left the pasture, I heard a low roar. I asked Grandpa, \"What is that noise?\" He said, \"It is one of the farm machines. Come and see.\"" 
           },
           { 
-            page: "Day 4 (p.6-7)", 
-            section: "Day 4: Farm Animals & Work", 
-            note: "今日目標：學習農場動物與日常工作",
-            text: "We saw cows, chickens, and fields of corn. Grandpa showed us how to feed the animals and get fresh milk." 
+            page: "Day 4 (63 words)", 
+            section: "p.15 - p.17: Wheat Fields & Combine", 
+            note: "進度：p.15 - p.17 (4/5)",
+            text: "Grandpa and Grandma took us to the wheat fields.\nwheat\n\nA man was driving a large machine.\n\nThe combine\nGrandpa said that it was a combine used to harvest the grain." 
           },
           { 
-            page: "Day 5 (p.8-9)", 
-            section: "Day 5: Wrap-up & Review", 
-            note: "今日目標：全書總結與記錄回顧",
-            text: "I took many photos with my camera. It was a wonderful week, and I made a big photo book to remember our trip." 
+            page: "Day 5 (63 words)", 
+            section: "p.18 - p.19: Buddy Waving & Farm Map", 
+            note: "進度：p.18 - p.19 (5/5)",
+            text: "Buddy\nWe waved to the man. He waved back. Then Buddy barked and wagged his tail. He was waving, too!\n\nFarm Map\nOur grandparents' farm is big. Here is a map of the farm. Maybe one day you can visit, too." 
           }
         ]
       },
@@ -100,34 +97,34 @@
         author: "D. M. Rice",
         pages: [
           {
-            page: "Day 1 (p.3 - p.5)",
-            section: "The Publisher",
-            note: "觀念打底：認識「編輯 (Editor)」與出版公司環境",
-            text: "I am a lot like my mom. We both love to write! I am writing about baseball. When I am finished, I will give the story to my mom.\n\nMy mom is an editor. She works for a magazine publisher. Maybe they will print my story in their magazine!\n\nThe magazine offices are fun to visit. They are high up in a skyscraper in the middle of the city. When we go there, the doorman winks at me and asks, 'Are you working here today?' I laugh and go inside."
+            page: "Day 1 (43 words)",
+            section: "p.3 - p.5: The Publisher",
+            note: "全書進度：0% ~ 20%",
+            text: "I am a lot like my mom. We both love to write! I am writing about baseball. When I am finished, I will give the story to my mom. My mom is an editor. She works for a magazine publisher. Maybe they will print my story in their magazine! The magazine offices are fun to visit. They are high up in a skyscraper in the middle of the city. When we go there, the doorman winks at me and asks, \"Are you working here today?\" I laugh and go inside."
           },
           {
-            page: "Day 2 (p.6 - p.9)",
-            section: "Making a Magazine: Ideas & Articles",
-            note: "進階理解：學習「期刊 (Issue)」與「文章 (Article)」的選定",
-            text: "Then up the elevator we go. When the doors open, we see people rushing back and forth. They work fast to publish the magazine.\n\nEach week they must finish a new issue. They can't be late! Their readers expect a new magazine. They expect it on time. They expect it to be good!\n\nWhen it is time for a new issue, the editors have a big meeting. They choose the magazine articles. They also choose the story writers."
+            page: "Day 2 (43 words)",
+            section: "p.6 - p.7: Making a Magazine",
+            note: "全書進度：20% ~ 40%",
+            text: "Then up the elevator we go. When the doors open, we see people rushing back and forth. They work fast to publish the magazine. Each week they must finish a new issue. They can't be late! Their readers expect a new magazine. They expect it on time. They expect it to be good!"
           },
           {
-            page: "Day 3 (p.10 - p.13)",
-            section: "Making a Magazine: Writers & Designers",
-            note: "中段突破：認識「作者 (Writer)」、「攝影師 (Photographer)」與「美編 (Designer)」",
-            text: "The writers make the stories interesting to read. Magazines need pictures, too. Photographers take the pictures, or artists may draw them.\n\nNext, designers get to work. They put the writing and pictures together on the magazine pages."
+            page: "Day 3 (43 words)",
+            section: "p.8 - p.11: Ideas & Writers",
+            note: "全書進度：40% ~ 60%",
+            text: "When it is time for a new issue, the editors have a big meeting. They choose the magazine articles. They also choose the story writers. The writers make the stories interesting to read. Magazines need pictures, too. Photographers take the pictures, or artists may draw them."
           },
           {
-            page: "Day 4 (p.14 - p.17)",
-            section: "Ready for Print & Delivery",
-            note: "後半整合：了解「審稿 (Check)」、「印刷 (Print)」與「物流 (Delivery)」",
-            text: "Everyone works fast! When they are finished, the editors check their work. Is everything ready? Yes, it is! So, now it is time for printing.\n\nThe printing factory is large and noisy. Huge rolls of paper are fed into printing machines. The machines print, cut, and staple the magazines.\n\n'Ready for delivery!' the printer calls. Then big mail trucks take them away."
+            page: "Day 4 (45 words)",
+            section: "p.12 - p.17: Printing & Delivery",
+            note: "全書進度：60% ~ 80%",
+            text: "Next, designers get to work. They put the writing and pictures together on the magazine pages. Everyone works fast! When they are finished, the editors check their work. Is everything ready? Yes, it is! So, now it is time for printing. The printing factory is large and noisy. Huge rolls of paper are fed into printing machines. The machines print, cut, and staple the magazines. \"Ready for delivery!\" the printer calls. Then big mail trucks take them away."
           },
           {
-            page: "Day 5 (p.18 - p.19)",
-            section: "Ready for Reading & Summary",
-            note: "衝刺完結：雜誌通路介紹與出版流程總整理",
-            text: "Some magazines come in the mail. Some magazines are bought in stores. You can even find magazines at the library. The next time you read a magazine, maybe you will see my story there!\n\n📋 [Publishing Chart]\n1. Editors choose ideas\n2. Writers write stories\n3. Photographers & artists draw pictures\n4. Designers assemble pages\n5. Editors check everything\n6. The printing factory prints\n7. Mail trucks deliver to readers"
+            page: "Day 5 (48 words)",
+            section: "p.18 - p.19: Delivery & Summary",
+            note: "全書進度：80% ~ 100%",
+            text: "Some magazines come in the mail. Some magazines are bought in stores. You can even find magazines at the library. The next time you read a magazine, maybe you will see my story there!\n\nPublishing a Magazine:\n- Editors choose the story ideas.\n- Writers write the stories.\n- Photographers and artists take and draw pictures for the stories.\n- Designers put the writing and pictures together on the pages.\n- Editors check everything.\n- The printing factory prints the magazine.\n- Mail trucks bring the magazines to the readers."
           }
         ]
       }
@@ -144,7 +141,6 @@
       document.getElementById('bookTitle').innerText = book.title;
       document.getElementById('bookAuthor').innerText = "by " + book.author;
 
-      // 更新下拉選單頁數
       const pageSelect = document.getElementById('pageSelect');
       pageSelect.innerHTML = '';
       book.pages.forEach((p, idx) => {
@@ -190,7 +186,6 @@
       loadBook(bookKey);
     }
 
-    // 初始化載入第一本
     loadBook('book1');
   </script>
 </body>
